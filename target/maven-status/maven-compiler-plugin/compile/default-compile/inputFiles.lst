@@ -1,0 +1,16 @@
+/Users/wward/git/musicminer/src/org/musicalpatriots/xml/entity/MusicXmlEntity.java
+/Users/wward/git/musicminer/src/org/musicalpatriots/orm/dao/RoleDao.java
+/Users/wward/git/musicminer/src/org/musicalpatriots/xml/entity/CompositionEntity.java
+/Users/wward/git/musicminer/src/org/musicalpatriots/service/businesslogic/Registration.java
+/Users/wward/git/musicminer/src/org/musicalpatriots/service/endpoint/CompositionService.java
+/Users/wward/git/musicminer/src/org/musicalpatriots/service/controller/MenuController.java
+/Users/wward/git/musicminer/src/org/musicalpatriots/orm/dao/UserDao.java
+/Users/wward/git/musicminer/src/org/musicalpatriots/orm/test/HibernateTest.java
+/Users/wward/git/musicminer/src/org/musicalpatriots/service/businesslogic/DomainLogic.java
+/Users/wward/git/musicminer/src/org/musicalpatriots/xml/dao/MusicXmlDao.java
+/Users/wward/git/musicminer/src/org/musicalpatriots/orm/entity/UserEntity.java
+/Users/wward/git/musicminer/src/org/musicalpatriots/orm/entity/RoleEntity.java
+/Users/wward/git/musicminer/src/org/musicalpatriots/xml/dao/CompositionDao.java
+/Users/wward/git/musicminer/src/org/musicalpatriots/service/businesslogic/Authentication.java
+/Users/wward/git/musicminer/src/org/musicalpatriots/service/controller/AuthController.java
+/Users/wward/git/musicminer/src/org/musicalpatriots/xml/dao/AbstractDao.java
