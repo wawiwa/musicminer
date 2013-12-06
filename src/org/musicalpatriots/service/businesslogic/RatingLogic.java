@@ -1,5 +1,19 @@
 package org.musicalpatriots.service.businesslogic;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.xml.xquery.XQConnection;
+import javax.xml.xquery.XQDataSource;
+import javax.xml.xquery.XQException;
+
+import net.xqj.exist.ExistXQDataSource;
+
+import org.musicalpatriots.xml.dao.CompositionDao;
+import org.musicalpatriots.xml.dao.RatingDao;
+import org.musicalpatriots.xml.entity.CompositionEntity;
+import org.musicalpatriots.xml.entity.RatingEntity;
+
 public class RatingLogic {
 	
 	public enum RateWeight {
@@ -49,6 +63,32 @@ public class RatingLogic {
 
 	}
 	
+	private XQConnection getConn() throws XQException {
+		XQDataSource xqs = new ExistXQDataSource();
+		xqs.setProperty("serverName", "musicalpatriots.org");
+		xqs.setProperty("port", "8899");
+		xqs.setProperty("user", "admin");
+		xqs.setProperty("password", "gmupatriots");
+		XQConnection conn = xqs.getConnection();
+		System.out.println("connection:" + conn);
+		return conn;
+	}
+        
+    public RatingEntity findByUserRef (String compositionId, String userRef) {
+            try {
+                    RatingDao dao = new RatingDao(getConn());
+                    
+                    RatingEntity searchResult = dao.findUserRating(compositionId, userRef);
+                    //System.out.println("search result count:" + searchResult.size());
+                    //System.out.println("search result title:" + searchResult.get(0).getMainTitle());
+                    
+                    return searchResult;
+            } catch (XQException ex) {
+                    ex.printStackTrace();
+            }                
+            return new RatingEntity();
+    }
+    
 	public static void main(String [] args) {
 		System.out.println("rating logic: "+RatingLogic.getDifficulty(1, 1, 0, 0, 0, 1, 1, 1, 1));
 	}

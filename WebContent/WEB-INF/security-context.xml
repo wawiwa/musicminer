@@ -21,6 +21,7 @@
 	 <logout logout-url="/secure/logout" logout-success-url="/home"/>
      <intercept-url  pattern="/secure/login/**" access="permitAll" />
      <intercept-url  pattern="/secure/home" access="permitAll" />
+     <intercept-url  pattern="/secure/composition/**" access="permitAll" />
      <intercept-url  pattern="/secure/**" access="hasRole('admin')" />
    </http>
    

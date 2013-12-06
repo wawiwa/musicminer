@@ -11,28 +11,47 @@
 <script src="<%=request.getContextPath()%>/resources/jQueryAssets/jquery-1.8.3.min.js" type="text/javascript"></script>
 <script src="<%=request.getContextPath()%>/resources/jQueryAssets/jquery-ui-1.9.2.tabs.custom.min.js" type="text/javascript"></script>
 <script type="text/javascript">
-function getCompositionById(id) {
-	alert("Composition ID: "+id);
-	var resUrl = "http://localhost:8080/<%=request.getContextPath()%>/composition/"+id;
-	$.getJSON(resUrl, showComposition);
+var renderedTable = "";
+function getUserRating(compositionId) {
+//alert("Composition ID: "+id);
+var resUrl = "http://localhost:8080/<%=request.getContextPath()%>/secure/composition/userrating/"+compositionId;
+alert(resUrl);
+$.getJSON(resUrl, showRating);
 }
-function showComposition(jsonData) 
-{
-	//alert("Composition Title: "+jsonData.length);
-	alert(jsonData.mainTitle);
-	discontrol('search');
+function saveComposition() {
+activateSearchTab();
 }
-function discontrol(itemid)
+function showRating(jsonData) 
 {
-     if(document.getElementById(itemid).style.display=='none'){
-		document.getElementById(itemid).style.display="";}
-     else{
-    	 document.getElementById(itemid).style.display="none";
-     }
+//alert("Composition Title: "+jsonData.length);
+alert(jsonData.user_ref);
+activateEditTab();
+}
+function hideControl(itemid)
+{
+ document.getElementById(itemid).style.display="none";
+}
+function showControl(itemid)
+{
+ document.getElementById(itemid).style.display="";
+}
+function switchTab(tabindex)
+{
+  $( "#Tabs1" ).tabs( "option", "active", tabindex );
+}
+function activateEditTab()
+{
+ showControl("edit");
+  switchTab(1);
+}
+function activateSearchTab()
+{
+ hideControl("edit");
+  switchTab(0);
 }
 function searchComposition()
 {
-	  var resUrl = "http://localhost:8080/<%=request.getContextPath()%>/composition/entity/";
+  var resUrl = "http://localhost:8080/<%=request.getContextPath()%>/secure/composition/entity/";
     //$.getJSON(resUrl, showCompositionList);
     $.post(resUrl, $("#data_frm").serialize(), showCompositionList);
 }
@@ -50,7 +69,7 @@ function showCompositionList(searchResult)
     htmlList += "<tbody>";
     for (var i = 0; i < searchResult.length; i++) {
         htmlList += "<tr>";
-        var handler = "getCompositionById('" + searchResult[i].number + "')";
+        var handler = "getUserRating('" + searchResult[i].number + "')";
         htmlList += "<td style='border:1px solid;color:#FF9900'><a onclick=" +  handler + " href=\"#\"><font color=\"#FF9900\">" + searchResult[i].number + "</font></td>";
         htmlList += "<td style='border:1px solid;color:#FF9900'>" + searchResult[i].mainTitle + "</td>";
         htmlList += "<td style='border:1px solid;color:#FF9900'>" + searchResult[i].author + "</td>";
@@ -61,12 +80,26 @@ function showCompositionList(searchResult)
     }
     htmlList += "</tbody>";
     htmlList += "</table>";
-	  $("#result_txt").html(htmlList);
+  $("#result_txt").html(htmlList);
+  renderedTable = htmlList;
+  //alert(renderedTable);
 }
 
 $(function() 
 {
   $("#searchCompositions_btn").click(searchComposition);
+  $( "#Tabs1" ).tabs({show:function( e,ui ) {
+	    //alert("tab " + ui.panel.id + " activated");
+//	     var o = ui.panel.id;
+//	     var p = Object.getPrototypeOf(o);
+//	     alert("proto: "+p);
+	   	//var tab = new String(ui.panel.id);
+	    //if (ui.panel.id.match("tabs-1") == 0) {
+	    	//$("#result_txt").html(renderedTable);
+	    	//alert($("#result_txt").html());
+	    //}
+		}
+	}); 
 });
 </script>
 <meta name="Welcome to our Music Database World" content="" />
@@ -137,32 +170,12 @@ $(function()
       <p>
         <button id="searchCompositions_btn"><font color="#FF9900">Search Now</font></button>
       </p>
-      <div id="result_txt">
-	      <table border="1">
-	        <tr>
-	          <th width="329"><font color="#FF9900">Music Piece</font></th>
-	        </tr>
-	        <tr>
-	          <td><a onclick="discontrol('edit')" href="#"><font color="#FF9900">row 1, cell 1</font></td>
-	        </tr>
-	        <tr>
-	          <td><font color="#FF9900">row 2, cell 1</font></td>
-	        </tr>
-	        <tr>
-	          <td>row 3, cell 1</td>
-	        </tr>
-	        <tr>
-	          <td>row 4, cell 1</td>
-	        </tr>
-	        <tr>
-	          <td>row 5, cell 1</td>
-	        </tr>
-	        <tr>
-	          <td>row 6, cell 1</td>
-	        </tr>
-      </table>
-      </div>
+      
+      <div id="result_txt"></div>
+      
   </div>
+  
+  
   
   <form id="rating_frm" method="post" action=""> 
   <div id="tabs-2">
@@ -221,31 +234,11 @@ $(function()
         </table>
         <p>&nbsp;</p>
      
-          <button id="Button5">Save</button>
-        </p>
+          <button id="Button5" onclick="saveComposition()">Save</button>
    </div>
   </div>
   </form>
 </div>
-
-<script type="text/javascript">
-function discontrol(itemid)
-{
-     if(document.getElementById(itemid).style.display=='none')
-     {
- document.getElementById(itemid).style.display="";
-     }
-     else
-     {
- document.getElementById(itemid).style.display="none";
-     }
-}
-</script>
-<script type="text/javascript">
-$(function() {
-	$( "#Tabs1" ).tabs(); 
-});
-</script>
 
 </body>
 </html>
