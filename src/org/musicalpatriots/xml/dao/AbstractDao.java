@@ -45,6 +45,8 @@ public abstract class AbstractDao<T> implements MusicXmlDao<T> {
 		try {
 			expr = conn.prepareExpression(query);
 			expr.executeQuery();
+			expr.close();
+			System.out.println("Terminated Successfully");
 		} catch (XQException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

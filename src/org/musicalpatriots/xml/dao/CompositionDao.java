@@ -71,6 +71,7 @@ public class CompositionDao extends AbstractDao<CompositionEntity> {
 		  query += " let $genre:=$composition//genre";
 		  query += " let $publisher:=$composition//publisher/name";
 		  query += " let $number:=$composition//number/id";
+		  query += " let $total_rating:=$composition/total_rating";
 		  query += makeSearchQueryCondition(author, title, era, genre, publisher);
 		  query += " return <composition>";
 		  query += " <title>{xs:string($title)}</title>";
@@ -79,6 +80,7 @@ public class CompositionDao extends AbstractDao<CompositionEntity> {
 		  query += " <era>{xs:string($era)}</era>";
 		  query += " <publisher>{xs:string($publisher)}</publisher>";
 		  query += " <number>{xs:string($number)}</number>";
+		  query += " <total_rating>{xs:string($total_rating)}</total_rating>";
 		  query += " </composition>";
 		  
 		  System.out.println("query: "+query);
@@ -95,7 +97,10 @@ public class CompositionDao extends AbstractDao<CompositionEntity> {
 		  composition.setAuthor(element.getElementsByTagName("author").item(0).getTextContent());
 		  composition.setPublisher(element.getElementsByTagName("publisher").item(0).getTextContent());
 		  composition.setNumber(element.getElementsByTagName("number").item(0).getTextContent());
+		  System.out.println("total_rating val: "+element.getElementsByTagName("total_rating").item(0));
 		  composition.setTotalRating(element.getElementsByTagName("total_rating").item(0).getTextContent());
+		  
+		  
 		  
 		  composition.print();
 		  

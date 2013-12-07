@@ -62,4 +62,35 @@ public class CompositionService {
     	System.out.println("total rating: "+re.getTotal_rating());
     	return re;
     }
+    
+    @RequestMapping(value = "/rating/{compositionId}/{userRef}", method = RequestMethod.POST, headers = {"Accept=application/json"})
+    public @ResponseBody RatingEntity saveUserRating(@PathVariable String compositionId,
+                @PathVariable String userRef,
+                @RequestParam String style,
+                @RequestParam String technique, 
+                @RequestParam String rhythm,
+                @RequestParam String flexibility,
+                @RequestParam String connections,
+                @RequestParam String range,
+                @RequestParam String merit,
+                @RequestParam String articulation,
+                @RequestParam String accompaniment,
+                @RequestParam String comments) {
+	     RatingEntity rating = new RatingEntity();
+	     rating.setCompositionId(compositionId);
+	     rating.setRater_ref(userRef);
+	     rating.setAccompaniment(accompaniment);
+	     rating.setArticulation(articulation);
+	     rating.setComments(comments);
+	     rating.setConnections(connections);
+	     rating.setFlexibility(flexibility);
+	     rating.setMerit(merit);
+	     rating.setRange(range);
+	     rating.setRhythm(rhythm);
+	     rating.setStyle(style);
+	     rating.setTechnique(technique);
+	     RatingLogic rl = new RatingLogic();
+	     rl.persistUserRating(rating);
+	     return rating;
+    }
 }

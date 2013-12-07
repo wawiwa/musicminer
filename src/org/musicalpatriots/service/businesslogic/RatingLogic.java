@@ -93,4 +93,14 @@ public class RatingLogic {
 		System.out.println("rating logic: "+RatingLogic.getDifficulty(1, 1, 0, 0, 0, 1, 1, 1, 1));
 	}
 	
+	public void persistUserRating (RatingEntity ratingEntity) {
+        try {
+            RatingDao dao = new RatingDao(getConn());
+            dao.persist(ratingEntity);
+
+	    } catch (XQException ex) {
+	            ex.printStackTrace();
+	    }                
+	}
+	
 }

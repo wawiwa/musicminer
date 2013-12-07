@@ -4,8 +4,10 @@ import java.util.List;
 
 import javax.xml.xquery.XQConnection;
 
+
 import org.musicalpatriots.xml.entity.RatingEntity;
 import org.w3c.dom.Element;
+
 
 public class RatingDao extends AbstractDao<RatingEntity> {
 
@@ -36,8 +38,11 @@ public class RatingDao extends AbstractDao<RatingEntity> {
 
 	@Override
 	public void persist(RatingEntity entity) {
+		
 		String query = "";
-		query += "update insert"; 
+		//query += "update insert"; 
+		query += "let $composition := doc('/db/music/CompositionCollection.xml')/composition_collection/composition";
+		query += " update insert"; 
 		query += " <rating>";
 		query += " <rater_ref>"+entity.getRater_ref()+"</rater_ref>";
 		query += " <style>"+entity.getStyle()+"</style>";
@@ -51,7 +56,7 @@ public class RatingDao extends AbstractDao<RatingEntity> {
 		query += " <articulation>"+entity.getArticulation()+"</articulation>";
 		query += " <merit>"+entity.getMerit()+"</merit>";
 		query += " <total_rating>"+entity.getTotal_rating()+"</total_rating>";
-		query += "</rating>";
+		query += " </rating>";
 		query += "into //composition/number[id="+entity.getCompositionId()+"]/../ratings";
 		
 		System.out.println("PERSIST:::: "+query);

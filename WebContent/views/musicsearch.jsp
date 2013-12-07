@@ -13,16 +13,20 @@
 <script src="<%=request.getContextPath()%>/resources/jQueryAssets/jquery-ui-1.9.2.tabs.custom.min.js" type="text/javascript"></script>
 <script type="text/javascript">
 var renderedTable = "";
+var selectedCompositionId = "";
 function getUserRating(compositionId) {
 //alert("Composition ID: "+id);
+selectedCompositionId = compositionId;
 var userRef = '<security:authentication property="principal.username"/>';
-alert(userRef);
 var resUrl = "http://localhost:8080/<%=request.getContextPath()%>/secure/composition/rating/"+compositionId+"/"+userRef;
 alert(resUrl);
 $.getJSON(resUrl, showRating);
 }
 function saveComposition() {
-activateSearchTab();
+	var userRef = '<security:authentication property="principal.username"/>';
+	var resUrl = "http://localhost:8080/<%=request.getContextPath()%>/secure/composition/rating/"+selectedCompositionId+"/"+userRef;
+	$.post(resUrl, $("#rating_frm").serialize(), function () { alert("Rating Saved");});
+	activateSearchTab();
 }
 function showRating(jsonData) 
 {
