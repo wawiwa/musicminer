@@ -54,24 +54,12 @@ public class CompositionService {
      return cl;
     }
     
-    @RequestMapping(value = "/userrating/{compositionId}", method = RequestMethod.GET, headers = {"Accept=application/json"})
-    public @ResponseBody RatingEntity getUserRating(@PathVariable String compositionId) {
+    @RequestMapping(value = "/rating/{compositionId}/{userRef}", method = RequestMethod.GET, headers = {"Accept=application/json"})
+    public @ResponseBody RatingEntity getUserRating(@PathVariable String compositionId, @PathVariable String userRef) {
     	RatingLogic rl = new RatingLogic();
-    	//Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-    	Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    	String username;
-    	if (principal instanceof UserDetails) {
-    	  username = ((UserDetails)principal).getUsername();
-    	} else {
-    	  username = principal.toString();
-    	}
-    	if(principal==null) {
-    		System.out.println("PRINCIPAL IS NULL.");
-    		return new RatingEntity();
-    	}
-    	System.out.println("principal: "+username);
-    	RatingEntity re = rl.findByUserRef(compositionId, "wward");
-    	System.out.println("rater_ref: "+re.getRater_ref());
+    	System.out.println("principal: "+userRef);
+    	RatingEntity re = rl.findByUserRef(compositionId, userRef);
+    	System.out.println("total rating: "+re.getTotal_rating());
     	return re;
     }
 }

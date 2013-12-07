@@ -39,4 +39,15 @@ public abstract class AbstractDao<T> implements MusicXmlDao<T> {
 		}		
 		return searchResult;		
 	}
+	
+	protected void execute(String query) {
+		XQPreparedExpression expr;
+		try {
+			expr = conn.prepareExpression(query);
+			expr.executeQuery();
+		} catch (XQException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

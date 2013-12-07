@@ -1,6 +1,7 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <html>
 <head>
 <meta charset="utf-8">
@@ -14,7 +15,9 @@
 var renderedTable = "";
 function getUserRating(compositionId) {
 //alert("Composition ID: "+id);
-var resUrl = "http://localhost:8080/<%=request.getContextPath()%>/secure/composition/userrating/"+compositionId;
+var userRef = '<security:authentication property="principal.username"/>';
+alert(userRef);
+var resUrl = "http://localhost:8080/<%=request.getContextPath()%>/secure/composition/rating/"+compositionId+"/"+userRef;
 alert(resUrl);
 $.getJSON(resUrl, showRating);
 }
@@ -24,8 +27,23 @@ activateSearchTab();
 function showRating(jsonData) 
 {
 //alert("Composition Title: "+jsonData.length);
-alert(jsonData.user_ref);
+$( "#articulation" ).val(jsonData.articulation);
+
 activateEditTab();
+$("#accompaniment").val(jsonData.accompaniment);
+$("#articulation").val(jsonData.articulation);
+$("#comments").val(jsonData.comments);
+$("#connections").val(jsonData.connections);
+$("#flexibility").val(jsonData.flexibility);
+$("#merit").val(jsonData.merit);
+$("#range").val(jsonData.range);
+$("#rater_ref").val(jsonData.rater_ref);
+alert(jsonData.total_rating);
+$("#total_rating").html(jsonData.total_rating);
+$("#rhythm").val(jsonData.rhythm);
+$("#style").val(jsonData.style);
+$("#technique").val(jsonData.technique);
+
 }
 function hideControl(itemid)
 {
@@ -65,6 +83,7 @@ function showCompositionList(searchResult)
     htmlList += "<th style='border:1px solid;color:#FF9900'>Genre</th>";
     htmlList += "<th style='border:1px solid;color:#FF9900'>Stylistic Era</th>";
     htmlList += "<th style='border:1px solid;color:#FF9900'>Publisher</th>";
+    htmlList += "<th style='border:1px solid;color:#FF9900'>Average Rating</th>";
     htmlList += "</tr></thead>";
     htmlList += "<tbody>";
     for (var i = 0; i < searchResult.length; i++) {
@@ -76,6 +95,7 @@ function showCompositionList(searchResult)
         htmlList += "<td style='border:1px solid;color:#FF9900'>" + searchResult[i].genre + "</td>";
         htmlList += "<td style='border:1px solid;color:#FF9900'>" + searchResult[i].stylisticEra + "</td>";
         htmlList += "<td style='border:1px solid;color:#FF9900'>" + searchResult[i].publisher + "</td>";
+        htmlList += "<td style='border:1px solid;color:#FF9900'>" + searchResult[i].totalRating + "</td>";
         htmlList += "</tr>";
     }
     htmlList += "</tbody>";
@@ -108,8 +128,7 @@ $(function()
 
 <body bgcolor="#006600">
 <h1><img src="<%=request.getContextPath()%>/resources/img/gmu1.jpg" width="629" height="355"  alt=""/></h1>
-<h1>Music Search and Edit! </h1>
-<p>&nbsp;</p>
+<h1>Music Search and Edit! <security:authentication property="principal.username"/></h1><p>&nbsp;</p>
 <div id="Tabs1" style="background:#006600; color:#FFF">
   <ul>
     <li><a id="search" href="#tabs-1"><font color="#FF9900">Music Search</font></a></li>
@@ -156,7 +175,7 @@ $(function()
    <tr>
      <td><font color="#FF9900">Publisher:</font></td>
      <td><label for="textfield13"></label>
-        <input type="text" name="Publisher" id="textfield13" /></td>
+        <input type="text" name="publisher" id="textfield13" /></td>
    </tr>
    <tr>
      <td><font color="#FF9900">Rating:</font></td>
@@ -184,7 +203,7 @@ $(function()
           <tr>
             <td width="113"><font color="#FF9900">Style:</font></td>
             <td width="271"><label for="textfield20"></label>
-          <input type="text" name="era" id="era" /></td>
+          <input type="text" name="style" id="style" /></td>
           </tr>
           <tr>
             <td><font color="#FF9900">Technique:</font></td>
@@ -224,7 +243,7 @@ $(function()
           <tr>
             <td><font color="#FF9900">Accomplishment:</font></td>
             <td><label for="accomplishment"></label>
-          <input type="text" name="accomplishment" id="accomplishment" /></td>
+          <input type="text" name="accompaniment" id="accompaniment" /></td>
           </tr>
           <tr>
             <td><font color="#FF9900">Comments:</font></td>
@@ -236,6 +255,9 @@ $(function()
      
           <button id="Button5" onclick="saveComposition()">Save</button>
    </div>
+   	<div id="apDiv1">
+  		<label id="total_rating" style="color:#FF9900" for="number">5000</label>
+	</div>
   </div>
   </form>
 </div>

@@ -31,7 +31,7 @@ public class CompositionDao extends AbstractDao<CompositionEntity> {
 	}
 	
 	public CompositionEntity getById(String id) {
-		String query = "for $composition in doc('/db/music/musicxml/CompositionCollection.xml')/composition_collection/composition ";
+		String query = "for $composition in doc('/db/music/CompositionCollection.xml')/composition_collection/composition ";
 		  query += " let $author:=$composition//author/name";
 		  query += " let $title:=$composition//main_title";
 		  query += " let $era:=$composition//stylistic_era";
@@ -55,7 +55,7 @@ public class CompositionDao extends AbstractDao<CompositionEntity> {
 
 	
 	public List<CompositionEntity> findByTitle(String title) {
-		String query = "for $composition in doc('/db/music/musicxml/CompositionCollection.xml')/composition_collection/composition ";
+		String query = "for $composition in doc('/db/music/CompositionCollection.xml')/composition_collection/composition ";
 		query += "where contains($composition/title/main_title,\'" + title + "\')";
 		query += "return $composition";
 		System.out.println("query: "+query);
@@ -64,7 +64,7 @@ public class CompositionDao extends AbstractDao<CompositionEntity> {
 	}
 
 	 public List<CompositionEntity> findByParams (String author, String title, String era, String genre, String publisher) {
-		  String query = "for $composition in doc('/db/music/musicxml/CompositionCollection.xml')/composition_collection/composition";
+		  String query = "for $composition in doc('/db/music/CompositionCollection.xml')/composition_collection/composition";
 		  query += " let $author:=$composition//author/name";
 		  query += " let $title:=$composition//main_title";
 		  query += " let $era:=$composition//stylistic_era";
@@ -95,6 +95,7 @@ public class CompositionDao extends AbstractDao<CompositionEntity> {
 		  composition.setAuthor(element.getElementsByTagName("author").item(0).getTextContent());
 		  composition.setPublisher(element.getElementsByTagName("publisher").item(0).getTextContent());
 		  composition.setNumber(element.getElementsByTagName("number").item(0).getTextContent());
+		  composition.setTotalRating(element.getElementsByTagName("total_rating").item(0).getTextContent());
 		  
 		  composition.print();
 		  

@@ -11,6 +11,7 @@ public class CompositionEntity {
 	 private String genre;
 	 private String stylisticEra;
 	 private String number;
+	 private String totalRating;
 	 
 	 public CompositionEntity() {}
 
@@ -63,6 +64,14 @@ public class CompositionEntity {
 
 	public void setNumber(String number) {
 		this.number = number;
+	}
+	 
+	public String getTotalRating() {
+		return totalRating;
+	}
+
+	public void setTotalRating(String totalRating) {
+		this.totalRating = totalRating;
 	}
 	 
 	public void print() {

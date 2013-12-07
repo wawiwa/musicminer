@@ -4,6 +4,7 @@ import org.musicalpatriots.service.businesslogic.RatingLogic;
 
 public class RatingEntity {
 
+	private String compositionId;
 	private String rater_ref;
 	private String total_rating;
 	private String style;
@@ -92,7 +93,14 @@ public class RatingEntity {
 	public void setComments(String comments) {
 		this.comments = comments;
 	}
-	
+	public String getCompositionId() {
+		return compositionId;
+	}
+	public void setCompositionId(String compositionId) {
+		this.compositionId = compositionId;
+	}
+
+
 	public void setRatingDifficulty() {
 		Double total =	RatingLogic.getDifficulty(Integer.parseInt(style), Integer.parseInt(technique), 
 				Integer.parseInt(accompaniment),Integer.parseInt(rhythm), Integer.parseInt(flexibility), 
