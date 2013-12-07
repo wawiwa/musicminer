@@ -19,7 +19,7 @@ function getUserRating(compositionId) {
 selectedCompositionId = compositionId;
 var userRef = '<security:authentication property="principal.username"/>';
 var resUrl = "http://localhost:8080/<%=request.getContextPath()%>/secure/composition/rating/"+compositionId+"/"+userRef;
-alert(resUrl);
+//alert(resUrl);
 $.getJSON(resUrl, showRating);
 }
 function saveComposition() {
@@ -42,7 +42,7 @@ $("#flexibility").val(jsonData.flexibility);
 $("#merit").val(jsonData.merit);
 $("#range").val(jsonData.range);
 $("#rater_ref").val(jsonData.rater_ref);
-alert(jsonData.total_rating);
+//alert(jsonData.total_rating);
 $("#total_rating").html(jsonData.total_rating);
 $("#rhythm").val(jsonData.rhythm);
 $("#style").val(jsonData.style);
